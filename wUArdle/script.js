@@ -82,7 +82,7 @@ function checkGuess() {
       rightGuess[letterPosition] = "#"
     }
 
-    let delay = 250 * i;
+    let delay = 0 * i;
     setTimeout(() => {
       box.style.backgroundColor = letterColor
       shadeKeyboard(letter, letterColor)
