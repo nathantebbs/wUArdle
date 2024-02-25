@@ -106,17 +106,17 @@ function checkGuess() {
 
 function shadeKeyboard(letter, color) {
   for (const elem of document.getElementsByClassName("keyboard-button")) {
-    let oldColor = elem.style.backgroundColor
-    if (oldColor === "green") {
-      return
-    }
-
-    if (oldColor === "yellow" && color !== "green") {
-      return
-    }
-
-    elem.style.backgroundColor = color
-    break
+    if (elem.textContent === letter) {
+      let oldColor = elem.style.backgroundColor
+      if (oldColor === 'green') {
+        return
+      }
+      if (oldColor === 'yellow' & oldColor !== 'green') {
+        return
+      }
+      elem.style.backgroundColor = color
+      break
+    } 
   }
 }
 
