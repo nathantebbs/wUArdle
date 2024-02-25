@@ -56,12 +56,12 @@ function checkGuess() {
     guessString += val
   }
   if (guessString.length != 5) {
-    alert("Not enogh letters!")
+    toastr.error("Not enogh letters!")
     return
   }
 
   if (!WORDS.includes(guessString)) {
-    alert("Word not found in list!")
+    toastr.error("Word not found in list!")
     return
   }
 
@@ -90,7 +90,7 @@ function checkGuess() {
   }
 
   if (guessString === rightGuessString) {
-    alert("You guessed right! Game over!")
+    toastr.success("You guessed right!")
     guessesRemaining = 0
     return
   } else {
@@ -99,7 +99,8 @@ function checkGuess() {
     nextLetter = 0;
 
     if (guessesRemaining === 0) {
-      alert("You don't have any guesses remaining. You lost!")
+      toastr.error('You lost!');
+      toastr.info(`The correct guess was ${rightGuessString}`);
     }
   }
 }
@@ -117,6 +118,30 @@ function shadeKeyboard(letter, color) {
       elem.style.backgroundColor = color
       break
     } 
+  }
+}
+
+function registerOnScreenInput(event) {
+  let inputLetter =  event.target.textContent;
+
+  if (guessesRemaining === 0) {
+    return
+  }
+  
+  if (inputLetter === "Del" && nextLetter !== 0) {
+    deleteLetter()
+    return
+  }
+
+  if (inputLetter === "Enter"){
+    checkGuess()
+    return
+  }
+  let found = inputLetter.match(/[a-z]/gi)
+  if (!found || found.length > 1) {
+    return
+  } else {
+    insertLetter(inputLetter)
   }
 }
 
@@ -142,5 +167,9 @@ document.addEventListener("keyup", (e) => {
     insertLetter(pressedKey)
   }
 })
+
+let onScreenKeyboard = document.getElementById("keyboard-cont")
+onScreenKeyboard.addEventListener("click", registerOnScreenInput)
+
 
 initBoard();
